@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/contacts.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title><%=title %></title>
+</head>
+<body>
+    <div class="header">
+        <h1><%=title %></h1>
+        <p><%=content %></p>
+    </div>
+
+    <% if (error) { %>
+        <div class="error-message">
+            <p><%= error %></p>
+        </div>
+    <% } %>
+
+    <div class="form-container">
+        <form action="<%= formAction %>" method="POST">
+            <% if (contact) { %>
+                <input type="hidden" name="_method" value="PUT">
+            <% } %>
+
+            <label for="name"> Name: </label>
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter full name"
+                value="<%= contact ? contact.name : '' %>"
+            >
+
+            <label for="phone"> Phone Number: </label>
+            <input
+                type="text"
+                name="phone"
+                placeholder="Enter phone number"
+                value="<%= contact ? contact.phone : '' %>"
+            >
+
+            <div class="button-group">
+                <button type="submit" class="save-btn">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <%= contact ? 'Update' : 'Save' %>
+                </button>
+                <a href="/contacts" class="back-button">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

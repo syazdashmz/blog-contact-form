@@ -1,0 +1,8 @@
+node_modules
+.env
+.DS_Store
+npm-debug.log
+
+# Optional: ignore uploaded/generated files
+# Keep this commented if your trainer wants sample images included
+# files/images/*

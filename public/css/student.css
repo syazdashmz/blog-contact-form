@@ -1,0 +1,72 @@
+.student-table {
+  margin: 40px auto;
+  width: 80%;
+  background-color: white;
+  overflow: hidden;
+}
+
+.student-table table {
+  width: 100%;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+}
+
+.student-table td,
+.student-table th {
+  padding: 12px 15px;
+  text-align: left;
+  border: 2px solid #dddddd;
+}
+
+.student-table th {
+  background-color: #dddddd;
+  font-weight: bold;
+}
+
+.student-table th:nth-child(1),
+.student-table td:nth-child(1) {
+  width: auto;
+}
+
+.student-table th:nth-child(2),
+.student-table td:nth-child(2) {
+  width: 180px;
+  text-align: center;
+}
+
+.student-table th:last-child,
+.student-table td:last-child {
+  width: 120px;
+  text-align: center;
+}
+
+.student-table .actions {
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.student-table .btn {
+  font-size: 18px;
+  border: none;
+  background: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.student-table .btn:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+.student-table .btn-view {
+  color: #2ecc71;
+}
+
+.student-table .btn-edit {
+  color: #3498db;
+}
+
+.student-table .btn-delete {
+  color: #e74c3c;
+}

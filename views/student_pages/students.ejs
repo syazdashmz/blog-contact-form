@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/student.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Student Management System</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Student Management System</h1>
+        <p>Manage and view details of the students.</p>
+    </div>
+
+    <div class="add-button-container">
+        <a href="/students/add" class="add-button">
+            <i class="fa-solid fa-plus"></i> Add Student
+        </a>
+    </div>
+
+    <div class="student-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Student Number</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (students.length === 0) { %>
+                    <tr>
+                        <td colspan="3">No students found.</td>
+                    </tr>
+                <% } else { %>
+                    <% students.forEach(function(student) { %>
+                        <tr>
+                            <td><%= student.name %></td>
+                            <td><%= student.student_no %></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="/students/<%= student.id %>" class="btn btn-view" title="View">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="/students/update/<%= student.id %>" class="btn btn-edit" title="Edit">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <form action="/students/delete/<%= student.id %>?_method=DELETE" method="POST"
+                                          onsubmit="return confirm('Delete <%= student.name %>?');">
+                                        <button type="submit" class="btn btn-delete" title="Delete">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

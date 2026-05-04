@@ -13,19 +13,20 @@ const PORT = process.env.PORT || 3000;
 // ======================================================
 // CORS CONFIGURATION
 // ======================================================
-// This allows your backend to accept requests from:
-// - Express itself: http://localhost:3000
-// - Angular frontend later: http://localhost:4200
-// - Postman will also continue working normally
+// Allows backend requests from:
+// - Express web pages: http://localhost:3000
+// - Angular frontend: http://localhost:4200
+// - Postman / Thunder Client
+// - Railway frontend/backend later if configured
 
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'http://localhost:4200'
+    'http://localhost:4200',
   ],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
@@ -51,35 +52,28 @@ app.use(methodOverride('_method'));
 // ======================================================
 
 // Serve files inside public folder
-// Example:
-// public/index.html
-// public/css/header.css
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve uploaded image files
-// Physical folder:
-// files/images
-//
-// Browser/API URL format:
-// http://localhost:3000/api/files/images/filename.jpg
+// Serve uploaded image files through API-style URL
+// Example:
+// http://localhost:3000/api/files/images/Dogs_love.jpg
 app.use(
   '/api/files/images',
   express.static(path.join(__dirname, 'files', 'images'))
 );
 
-// Optional legacy support
-// This allows old database image paths like:
-// /files/images/Dogs_love.jpg
-//
-// You may keep this temporarily while cleaning old data.
+// Optional legacy support for old image paths
+// Example:
+// http://localhost:3000/files/images/Dogs_love.jpg
 app.use(
   '/files/images',
   express.static(path.join(__dirname, 'files', 'images'))
 );
 
 // ======================================================
-// WEB ROUTES
+// WEB ROUTES - SERVER RENDERED PAGES
 // ======================================================
+// These are for EJS/browser pages handled by Express.
 
 const blogRoutes = require('./routes/blog/blog_routes');
 const contactRoutes = require('./routes/contacts/contacts_routes');
@@ -90,14 +84,33 @@ app.use('/contacts', contactRoutes);
 app.use('/students', studentRoutes);
 
 // ======================================================
-// API ROUTES
+// API ROUTES - USED BY ANGULAR FRONTEND
 // ======================================================
+// These return JSON data for Angular HttpClient.
 
 const reportApiRoutes = require('./routes/api/report_api_routes');
 const authApiRoutes = require('./routes/api/auth_api_routes');
+const studentApiRoutes = require('./routes/api/student_api_routes');
 
 app.use('/api/reports', reportApiRoutes);
 app.use('/api/auth', authApiRoutes);
+app.use('/api/students', studentApiRoutes);
+
+// ======================================================
+// API HEALTH CHECK
+// ======================================================
+
+app.get('/api', (req, res) => {
+  res.json({
+    success: true,
+    message: 'API is running.',
+    endpoints: {
+      reports: '/api/reports',
+      students: '/api/students',
+      auth: '/api/auth/login',
+    },
+  });
+});
 
 // ======================================================
 // HOME ROUTE
@@ -114,7 +127,8 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: 'Route not found.'
+    message: 'Route not found.',
+    path: req.originalUrl,
   });
 });
 
@@ -123,12 +137,12 @@ app.use((req, res) => {
 // ======================================================
 
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error('GLOBAL ERROR:', err);
 
   res.status(500).json({
     success: false,
     message: 'Internal server error.',
-    error: err.message
+    error: err.message,
   });
 });
 

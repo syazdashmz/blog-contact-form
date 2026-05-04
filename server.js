@@ -23,6 +23,7 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
     'http://localhost:4200',
+    'https://angular-mymahir.web.app',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   credentials: true,

@@ -1,6 +1,3 @@
-Below is the improved and updated **README.md** file. It retains all technical details while adding clear recognition of the **MyMAHIR Angular Training Workshop 2026 Cohort 2** and **Danish Syazani bin Mohd Zakir** as the main developer.
-
-```markdown
 # Blog Contact Form - Express.js Full Stack Training Project
 
 > **Program:** MyMAHIR Angular Training Workshop 2026 – Cohort 2  
